@@ -58,12 +58,14 @@ Tags:
 */  
 ```
 
-## Header 
+## Primeiros arquivos
+
+### header.php 
 
 - inserir as tags html de um documento comum (até o `<body>`)
 - dentro do `<title>`, torná-lo dinâmico para que o usuário possa mudar o título depois
 
-### Título dinâmico
+**Título dinâmico**
 
 - inserir a função do WP `bloginfo();` dentro da tag `<title>`
 
@@ -73,17 +75,47 @@ Tags:
 
 `<?php wp_head(); ?>`
 
-## Footer
+### footer.php
 
 - fechar as tags `</body>` e `</html>`
 - entre elas, antes de fechar o html, inserir uma tag do WP para ele reconhecer que é um footer
 
 `<?php wp_footer(); ?>`
 
-## Index.php
+### index.php
 
 - importar aqui os dois arquivos criados
 - usar `require_once`
 
+### functions.php
+
+- toda vez que quisermos adicionar uma funcionalidade que não está no painel, devemos criar uma função dentro do arquivo `functions.php`
+- um exemplo seria adicionar menus
+
+**Adicionando um menu**
+
+- criar uma função com um nome que já diz o que fará e referencia o tema (exemplo: `alura_registrando_menu()`)
+- chamar dentro dela a função wordpress que registra um menu de navegação: `register_nav_menu()`
+
+```php
+function alura_registrando_menu(){
+    register_nav_menu( 
+        'menu-navegacao',
+        'Menu navegação'
+     );
+}
+```
+
+**Action hooks**
+
+- para funcionar, deve-se depois adicionar um `action hook`
+- quando o wp executa seu código interno, nós podemos enganchar novas funções
+- sem o `action hook`, o wp não sabe em que momento o código deverá ser executado
+- por isso, depois de registrar o menu, temos que adicioná-lo
+- neste hook, colocamos quando a função deve ser executada (exemplo: ao iniciar, `init`), e qual esta função (exemplo: a função criada acima `alura_registrando_menu`)
+
+```php
+add_action('init', 'alura_registrando_menu');
+```
 
 
