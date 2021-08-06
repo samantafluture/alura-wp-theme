@@ -118,4 +118,9 @@ function alura_registrando_menu(){
 add_action('init', 'alura_registrando_menu');
 ```
 
+- em seguida, já irá aparecer a seção `Menu` dentro de `Aparência` no painel
+- porém mesmo após criar o menu no painel, ele ainda não vai aparecer no site
+- pois ainda precisamos falar onde
+
+
 
