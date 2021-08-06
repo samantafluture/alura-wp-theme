@@ -37,3 +37,7 @@
 
 - [ ] Tema customizado
 - [ ] Plugins
+
+---
+
+Projeto desenvolvido seguindo os [cursos e materias da Alura](https://www.alura.com.br/) sobre PHP e Wordpress.
