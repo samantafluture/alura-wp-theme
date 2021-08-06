@@ -29,8 +29,61 @@
 - Faça a instalação seguindo os passos e preenchendo seus dados (os mesmos da configuração e também seu usuário, senha e acesso ao painel de administração)
 - Visite `localhost:8888/wordpress/wp-admin` para fazer o login!
 
-## Em desenvolvimento
+## Acessos
 
-- Acessar [phpMyAdmin](http://localhost:8888/phpMyAdmin5/)
+- Acessar banco de dados [phpMyAdmin](http://localhost:8888/phpMyAdmin5/)
 - Acessar [painel do Wordpress](http://localhost:8888/wordpress/wp-admin/)
+- Acessar [blog Wordpress](http://localhost:8888/wordpress/)
+
+## Onde os temas ficam armazenados?
+
+Os temas ficam dentro da sua pasta, acessando ``wp-content/themes`. Exemplo de caminho completo: `/wordpress/wp-content/themes.
+
+Este tema está como o diretório `alura-theme`, dentro da pasta 'themes'.
+
+Para o tema aparecer na área de Temas do painel, adicione os seguintes arquivos na pasta:
+- style.css
+- index.php
+- screenshot.jpg (para ser a thumbnail do tema)
+
+Dentro do `style.css`, incluir a descrição do seu tema dentro de comentários:
+
+```css
+/*
+Theme Name: 
+Author: 
+Description: 
+Version: 
+Tags: 
+*/  
+```
+
+## Header 
+
+- inserir as tags html de um documento comum (até o `<body>`)
+- dentro do `<title>`, torná-lo dinâmico para que o usuário possa mudar o título depois
+
+### Título dinâmico
+
+- inserir a função do WP `bloginfo();` dentro da tag `<title>`
+
+`<title><?php bloginfo( 'name' ); ?></title>`
+
+- antes de fechar o `<header>`, inserir uma tag do WP de cabeçalho, para que ele reconheça
+
+`<?php wp_head(); ?>`
+
+## Footer
+
+- fechar as tags `</body>` e `</html>`
+- entre elas, antes de fechar o html, inserir uma tag do WP para ele reconhecer que é um footer
+
+`<?php wp_footer(); ?>`
+
+## Index.php
+
+- importar aqui os dois arquivos criados
+- usar `require_once`
+
+
 
