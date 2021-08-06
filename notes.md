@@ -1,6 +1,6 @@
 # Como criar um tema Wordpress do zero
 
-## Instalar MAMP e Wordpress no macOS
+## Preparar ambiente
 
 **MAMP**
 
@@ -19,7 +19,7 @@
 
 - Baixe o zip com a última versão do [Wordpress](https://br.wordpress.org/download/)
 - Extraia a pasta `wordpress`
-- Copie e cole a pasta para dentro da pasta `htdocs` no `Applications/Mamp`
+- Copie e cole a pasta para dentro da pasta `localhost` no `(usuario do mac)/Sites`
 - Dentro desta pasta, abra o arquivo `wp-config-sample.php`
 - Substiua os parâmetros `database_name`, `username` e `password` para o nome do seu banco de dados criado anteriormente (exemplo: `wordpress`)
 - Substitui o restante por `root`
@@ -28,3 +28,9 @@
 - Visite `localhost:8888/wordpress`
 - Faça a instalação seguindo os passos e preenchendo seus dados (os mesmos da configuração e também seu usuário, senha e acesso ao painel de administração)
 - Visite `localhost:8888/wordpress/wp-admin` para fazer o login!
+
+## Em desenvolvimento
+
+- Acessar [phpMyAdmin](http://localhost:8888/phpMyAdmin5/)
+- Acessar [painel do Wordpress](http://localhost:8888/wordpress/wp-admin/)
+

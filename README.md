@@ -23,7 +23,7 @@
 
 - Baixe o zip com a última versão do [Wordpress](https://br.wordpress.org/download/)
 - Extraia a pasta `wordpress`
-- Copie e cole a pasta para dentro da pasta `htdocs` no `Applications/Mamp`
+- Copie e cole a pasta para dentro da pasta `htdocs` no `Applications/Mamp` ou na pasta `localhost` no `(usuario do mac)/Sites` (dependendo de onde seu servidor estiver)
 - Dentro desta pasta, abra o arquivo `wp-config-sample.php`
 - Substiua os parâmetros `database_name`, `username` e `password` para o nome do seu banco de dados criado anteriormente (exemplo: `wordpress`)
 - Substitui o restante por `root`
