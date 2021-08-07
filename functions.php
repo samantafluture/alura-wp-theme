@@ -42,3 +42,37 @@ function alura_registrando_menu(){
 }
 
 add_action('init', 'alura_registrando_menu');
+
+function alura_registrando_post_customizado_banner(){
+    register_post_type('banners', array(
+        'labels' => array('name' => 'Banner'),
+        'public' => true,
+        'menu_position' => 1,
+        'menu_icon' => 'dashicons-format-image',
+        'supports' => array('title', 'thumbnail')
+    ));
+}
+
+add_action('init', 'alura_registrando_post_customizado_banner');
+
+function alura_registrando_metabox(){
+    add_meta_box(
+        'alura_registrando_metabox',
+        'Texto para a home',
+        'alura_funcao_callback',
+        'banners'
+    );
+}
+
+add_action('add_meta_boxes', 'alura_registrando_metabox');
+
+function alura_funcao_callback($post){
+    ?>
+    <label for="texto_home_1">Texto 1</label>
+    <input type="text" name="texto_home_1" style="width: 100%"/>
+    <br>
+    <br>
+    <label for="texto_home_2">Texto 2</label>
+    <input type="text" name="texto_home_2" style="width: 100%"/>
+    <?php
+}

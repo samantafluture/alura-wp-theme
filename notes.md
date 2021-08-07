@@ -468,3 +468,81 @@ $args = array(
 <?= !empty($_GET['paises']) && $_GET['paises'] == $pais->name ? 'selected' : '' ?>>
 ```
 
+## Home
+
+**Home como página estática**
+
+- criar uma págona `front-page.php` onde vai tudo o que aparecerá na home estática
+- mudar a configuração de `leitura` no painel para `página estática` -> `home`
+
+**Novo recurso de banner para home**
+
+- mais uma função para criar um `custom post type`
+- seguindo os mesmos passos do tipo `Destinos`
+- chama a função `register_post_type`
+- no primeiro argumento, chama este tipo de post de `banners`
+- no segundo, passa todas as configs dele (o nome 'Banner', seu vai aparecer a todos, qual posição que vai aparecer no painel, o ícone e o que irá ter de recursos)
+
+```php
+function alura_registrando_post_customizado_banner(){
+    register_post_type('banners', array(
+        'labels' => array('name' => 'Banner'),
+        'public' => true,
+        'menu_position' => 1,
+        'menu_icon' => 'dashicons-format-image',
+        'supports' => array('title', 'thumbnail')
+    ));
+}
+
+add_action('init', 'alura_registrando_post_customizado_banner');
+```
+
+### Configurando metabox
+
+**Criar metaboxes customizados**
+
+- o recurso de adicionar um banner na home também deve ter, além de imagem e título, dois campos de textos
+- ou seja, ao entrar na área de banners, deverão ter campos de textos 
+- estes campos serão criados através de metaboxes customizados
+- para isso, temos que configurar metaboxes
+- criar uma função que execute a `add_meta_box()`
+- ela deverá receber como parâmetros:
+    - o id deste metabox (uma string)
+    - a descrição deste metabox (uma string)
+    - o nome de uma função callback que deverá executar (uma string)
+    - o tipo de post customizado criado ao qual estará linkado (uma string)
+- depois, adicionar o action hook específico de metaboxes
+
+```php
+function alura_registrando_metabox(){
+    add_meta_box(
+        'alura_registrando_metabox',
+        'Texto para a home',
+        'alura_funcao_callback',
+        'banners'
+    );
+}
+add_action('add_meta_boxes', 'alura_registrando_metabox');
+```
+
+- em seguida, criar a função callback que demos nome acima
+- ela recebe uma variáve; $post do próprio wp
+- dentro dela, tags html para criar inputs onde o usuário irá digitar textos
+
+```php
+function alura_funcao_callback($post){
+    ?>
+    <label for="texto_home_1">Texto 1</label>
+    <input type="text" name="texto_home_1" style="width: 100%"/>
+    <br>
+    <br>
+    <label for="texto_home_2">Texto 2</label>
+    <input type="text" name="texto_home_2" style="width: 100%"/>
+    <?php
+}
+```
+
+**Salvar dados metabox**
+
+- agora precisamos falar para o wp o que fazer com estes inputs recebidos
+
