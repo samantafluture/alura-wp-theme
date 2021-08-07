@@ -1,10 +1,26 @@
 # Criando um tema Wordpress do zero
 
-- Mamp (MySQL, Apache, PHP no macOs)
 - PHP
 - Wordpress
+- Mamp (MySQL, Apache, PHP no macOs)
+
+---
+
+## Tutorial completo
+
+1. [Preparar ambiente](https://github.com/samantafluture/alura-wp-theme/blob/main/notes.md#preparar-ambiente)
+2. [Primeiros arquivos](https://github.com/samantafluture/alura-wp-theme/blob/main/notes.md#primeiros-arquivos)
+3. [Fazendo o header](https://github.com/samantafluture/alura-wp-theme/blob/main/notes.md#fazendo-o-header)
+4. [Fazendo as páginas](https://github.com/samantafluture/alura-wp-theme/blob/main/notes.md#fazendo-as-p%C3%A1ginas)
+5. [Fazendo o rodapé](https://github.com/samantafluture/alura-wp-theme/blob/main/notes.md#fazendo-o-rodap%C3%A9)
+6. [Posts customizados](https://github.com/samantafluture/alura-wp-theme/blob/main/notes.md#posts-customizados)
+7. [Criando uma home estática](https://github.com/samantafluture/alura-wp-theme/blob/main/notes.md#posts-customizados)
+
+---
 
 ## Instalar MAMP e Wordpress no macOS
+
+Como tive difuldade de início para ter um ambiente no macOs preparado para produção local de Wordpress, fiz um breve tutorial abaixo.
 
 **MAMP**
 
@@ -32,18 +48,6 @@
 - Visite `localhost:8888/wordpress`
 - Faça a instalação seguindo os passos e preenchendo seus dados (os mesmos da configuração e também seu usuário, senha e acesso ao painel de administração)
 - Visite `localhost:8888/wordpress/wp-admin` para fazer o login!
-
----
-
-## Tutorial completo
-
-1. [Preparar ambiente](https://github.com/samantafluture/alura-wp-theme/blob/main/notes.md#preparar-ambiente)
-2. [Primeiros arquivos](https://github.com/samantafluture/alura-wp-theme/blob/main/notes.md#primeiros-arquivos)
-3. [Fazendo o header](https://github.com/samantafluture/alura-wp-theme/blob/main/notes.md#fazendo-o-header)
-4. [Fazendo as páginas](https://github.com/samantafluture/alura-wp-theme/blob/main/notes.md#fazendo-as-p%C3%A1ginas)
-5. [Fazendo o rodapé](https://github.com/samantafluture/alura-wp-theme/blob/main/notes.md#fazendo-o-rodap%C3%A9)
-6. [Posts customizados](https://github.com/samantafluture/alura-wp-theme/blob/main/notes.md#posts-customizados)
-7. [Criando uma home estática](https://github.com/samantafluture/alura-wp-theme/blob/main/notes.md#posts-customizados)
 
 ---
 
