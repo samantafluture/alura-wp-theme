@@ -545,4 +545,32 @@ function alura_funcao_callback($post){
 **Salvar dados metabox**
 
 - agora precisamos falar para o wp o que fazer com estes inputs recebidos
+- criar uma função para salvar os dados metabox
+- passar como parâmetro o `$post_id` que vai vir do wp
+- fazer um `foreach` com condição para tratar e salvar os dados
+- se o método `POST` está sendo executado a partir de conteúdos inseridos nos metaboxes, vamos tratar, caso contrário deixamos para o wp 
+- para salar os dados, usamos a função `update_post_meta()`
+- passamos 3 parâmetros pra ela:
+    - id do post que estamos salvando (`$post_id`)
+    - a chave queremos ser atribuída no banco de dados (convenção: campos customizados se iniciam com `_`)
+    - conteúdo colocado pelo usuário no campo, o respectivo valor de cada chave durante o método `POST` realizado pelo usuário
+- em seguida, vincular a função em um action hook resonsável por salvar posts (`save_post`)
+
+```php
+function alura_salvando_dados_metabox($post_id){
+    foreach($_POST as $key=>$value){
+        if($key !== 'texto_home_1' && $key !== 'texto_home_2'){
+            continue;
+        }
+
+        update_post_meta(
+            $post_id,
+            '_' . $key,
+            $_POST[$key]
+        );
+    }
+}
+add_action('save_post', 'alura_salvando_dados_metabox');
+```
+
 
