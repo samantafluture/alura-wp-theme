@@ -357,7 +357,7 @@ function alura_registrando_taxonomia(){
 - mas sim o padrão, que seria o conteúdo da página em si
 - por isso, é preciso modificar o loop
 
-1. instaciar um objeto `WP_Query`, guardando seu valor na variável `$query` e recebendo uma variável `$args`
+1. instaciar a classe `WP_Query`, guardando seu valor na variável `$query` e recebendo uma variável `$args`
 
 `$query = new WP_Query($args);`
 
@@ -377,7 +377,33 @@ if ($query->have_posts()):
 endif;
 ```
 
-## Form
+### Formulários
+
+- quando é Objects eu atribuo valor com `->`
+- quando é array eu atribuo valor com `[]`
+- criar um form com tags html
+
+**Deixando o form dinâmico**
+
+- a primeira coisa é usar a função `get_terms()` que recebe um array
+- este array deverá ter a taxonomia criada como chave e valor
+- guardar o resultado desta função (ou seja, as tags de países) dentro da variável `$paises`
+- depois, abrir um for each
+- este for earch irá criar tags `<option>` para cada `tag` de país criada pelo usuário no sistema
+- para imprimir o nome da tag de forma correta, deve-se passar o valor do objeto usando uma `->` 
+
+```php
+<?php 
+    $paises = get_terms(array('taxonomy' => 'paises'));
+    foreach($paises as $pais): 
+    ?>
+        <option value="<?= $pais->name ?>">
+            <?= $pais->name ?>
+        </option>
+    <?php 
+    endforeach;
+    ?>
+```
 
 
 
