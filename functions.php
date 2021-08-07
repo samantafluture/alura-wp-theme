@@ -94,3 +94,37 @@ function alura_salvando_dados_metabox($post_id){
 }
 
 add_action('save_post', 'alura_salvando_dados_metabox');
+
+function pegandoTextosParaBanner(){
+
+    $args = array(
+        'post_type' => 'banners',
+        'post_status' => 'publish',
+        'post_per_page' => 1
+    );
+    $query = new WP_Query($args);
+
+    if($query->have_posts()):
+        while($query->have_posts()): $query->the_post();
+            $texto1 = get_post_meta(get_the_ID(), '_texto_home_1', true);
+            $texto2 = get_post_meta(get_the_ID(), '_texto_home_2', true);
+            return array(
+                'texto_1' => $texto1,
+                'texto_2' => $texto2
+            );
+        endwhile;
+    endif;
+}
+
+function alura_adicionando_scripts(){
+
+    $textosBanner = pegandoTextosParaBanner();
+
+    if(is_front_page()){
+        wp_enqueue_script('typed-js', get_template_directory_uri() . '/js/typed.min.js', array(), false, true);
+        wp_enqueue_script('texto-banner-js', get_template_directory_uri() . '/js/texto-banner.js', array('typed-js'), false, true);
+        wp_localize_script('texto-banner-js', 'data', $textosBanner);
+    };
+}
+
+add_action('wp_enqueue_scripts', 'alura_adicionando_scripts');

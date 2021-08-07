@@ -549,7 +549,7 @@ function alura_funcao_callback($post){
 - passar como parâmetro o `$post_id` que vai vir do wp
 - fazer um `foreach` com condição para tratar e salvar os dados
 - se o método `POST` está sendo executado a partir de conteúdos inseridos nos metaboxes, vamos tratar, caso contrário deixamos para o wp 
-- para salar os dados, usamos a função `update_post_meta()`
+- para salar os dados, usamos a função `update_post_meta()`: utilizada para salvar/atualiar os campos customizados de um post
 - passamos 3 parâmetros pra ela:
     - id do post que estamos salvando (`$post_id`)
     - a chave queremos ser atribuída no banco de dados (convenção: campos customizados se iniciam com `_`)
@@ -573,4 +573,76 @@ function alura_salvando_dados_metabox($post_id){
 add_action('save_post', 'alura_salvando_dados_metabox');
 ```
 
+- voltar na função de callback
+- deixar que o conteúdo inserido pelo usuário continue lá no campo input após ser salvo/publicado
+- usar a função `get_post_meta`
+- passar o id do post em questão (`$post->ID`), a chave, e que você só quer retornar este valor (`true`)
+
+`$texto_home_1 = get_post_meta($post->ID, '_texto_home_1', true);`
+
+- colocar essa variável que guarda a função acima como valor do input na tag html
+
+`<input type="text" name="texto_home_1" style="width: 100%"/ value="<?= $texto_home_1 ?>">`
+
+**Mostrar o banner na home**
+
+- usar o loop do wp junto de tags htmls com suas respectivas classes de estilo
+
+### Texto Dinâmico
+
+**Usar lib js**
+
+- js>typed.min
+- vamos trabalhar com uma biblioteca Javascript para animar o texto do banner (efeito de digitação)
+- configurar a biblioteca no arquivo `js/texto-banner.js`
+- adicionar a biblioteca a partir de uma função que carrega scrips `alura_adicionando_scripts()`, que executa a função `wp_enqueue_script()`
+- essa última será executa duas vezes, uma para a lib js e outra para os textos que irão no banner
+- elas serão executadas apenas se estiver na página home, ou seja, `front-page`
+- como parâmetros, recebem: nome, caminho do arquivo, se depende de algo
+- depois, um action hook especial de scripts
+
+```php
+function alura_adicionando_scripts(){
+    if(is_front_page()){
+        wp_enqueue_script('typed-js', get_template_directory_uri() . '/js/typed.min.js', array(), false, true);
+        wp_enqueue_script('texto-banner-js', get_template_directory_uri() . '/js/texto-banner.js', array('typed-js'), false, true);
+    };
+}
+add_action('wp_enqueue_scripts', 'alura_adicionando_scripts');
+```
+
+**Mostrar o texto dinâmico no banner**
+
+- devemos agora buscar o texto que o usuário cadastrou no painel de `banners`
+- para isso, função `alura_adicionando_scripts()` adicionar a variável abaixo e uma nova função
+- `$textosBanner = pegandoTextosParaBanner();`
+- criar esta função fora da função de scripts
+- nela, colocar o loop do wp, pegando os posts criados pelo id
+
+```php
+function pegandoTextosParaBanner(){
+
+    $args = array(
+        'post_type' => 'banners',
+        'post_status' => 'publish',
+        'post_per_page' => 1
+    );
+    $query = new WP_Query($args);
+
+    if($query->have_posts()):
+        while($query->have_posts()): $query->the_post();
+            $texto1 = get_post_meta(get_the_ID(), '_texto_home_1', true);
+            $texto2 = get_post_meta(get_the_ID(), '_texto_home_2', true);
+            return array(
+                'texto_1' => $texto1,
+                'texto_2' => $texto2
+            );
+        endwhile;
+    endif;
+}
+```
+
+- de volta na `alura_adicionando_scripts()`, acrescentar uma nova função do wp
+- `wp_localize_script('texto-banner-js', 'data', $textosBanner);` vai adicionar o script de js, passar um objeto data para ele e usar a função que criamos acima como forma de mostrar o texto dinâmico
+- este objeto `data` também deve ser referenciado no arquivo js
 
