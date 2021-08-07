@@ -1,12 +1,14 @@
 # Criando um tema Wordpress do zero
 
+Tecnologias usadas:
+
 - PHP
 - Wordpress
 - Mamp (MySQL, Apache, PHP no macOs)
 
----
-
 ## Tutorial completo
+
+Junto do código, é possível ler o passo a passo de como criar o projeto nos links abaixo.
 
 1. [Preparar ambiente](https://github.com/samantafluture/alura-wp-theme/blob/main/notes.md#preparar-ambiente)
 2. [Primeiros arquivos](https://github.com/samantafluture/alura-wp-theme/blob/main/notes.md#primeiros-arquivos)
@@ -16,7 +18,6 @@
 6. [Posts customizados](https://github.com/samantafluture/alura-wp-theme/blob/main/notes.md#posts-customizados)
 7. [Criando uma home estática](https://github.com/samantafluture/alura-wp-theme/blob/main/notes.md#posts-customizados)
 
----
 
 ## Instalar MAMP e Wordpress no macOS
 
