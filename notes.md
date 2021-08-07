@@ -405,8 +405,66 @@ endif;
     ?>
 ```
 
+- a função `get_terms()` é responsável por trazer os campos de uma determinada taxonomia
 
+### Aplicando filtro no form
 
+- para criar um filtro no form, temos que acrecentar um novo parâmetro na `$query`
+- além de pegar o tipo de post, temos que pegar a taxonomia via busca (`tax_query`)
+- dessa forma somos capazes de buscar os destinos que foram vinculados ao país filtrado
+- guardamos esse valor em uma variável `$paisSelecionado`
 
+```php
+$args = array(
+    'post_type' => 'destinos',
+    'tax_query' => $paisSelecionado
+);
+```
 
+- em seguida, vamos criar essa variável, que recebe um array dentro de outro array
+- neste array vai ter: a taxonomia que queremos, o campo que queremos, e o que queremos fazer (no caso, faz um método `GET` para pegar os posts que estão com determina taxonomia via busca) usando o `$_GET`
+
+```php
+$paisSelecionado = array(array(
+    'taxonomy' => 'paises',
+    'field' => 'name',
+    'terms' => $_GET['paises']
+));
+```
+
+- porém o filtro não deve ser ativado se estivermos na opção "selecione"
+- nesta opção, ainda devem aparecer todos os países/conteúdos
+- colocar o array `$paisSelecionado` dentro de um if condicional
+- o filtro deverá funcionar apenas se estiver sendo feita uma requisição GET
+- caso contrário, mostrar tudo como anteriormente
+
+```php
+if(!empty($_GET['paises'])) {
+    $paisSelecionado = array(array(
+        'taxonomy' => 'paises',
+        'field' => 'name',
+        'terms' => $_GET['paises']
+    ));
+}
+```
+
+- além disso, a variável `$paisSelecionado`, se não tiver GET, deve ser vazia no array cuja sua chave é `tax_query`
+- ao filtrar um dterminado país, a chave `paises` terá como valor o país sendo filtrado
+- assim o valor da chave não seria vazio e a primeira condição acima será executada
+- trazendo todos os posts do país filtrado
+
+```php
+$args = array(
+    'post_type' => 'destinos',
+    'tax_query' => !empty($_GET['paises']) ? $paisSelecionado : ''
+);
+```
+
+- por fim, devemos manter o nome do país quando filtramos
+- então o option deve ter o atribute `selected` dentro de sua tag html
+- faremos mais um ternário para imprimir esta condição dentro do html
+
+```php
+<?= !empty($_GET['paises']) && $_GET['paises'] == $pais->name ? 'selected' : '' ?>>
+```
 
