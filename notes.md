@@ -296,6 +296,8 @@ endif;
 
 ## Posts customizados
 
+### Criando tipos de posts customizados
+
 - podemos criar uma área no painel para adicionar um tipo de post customizado
 - criar uma função que registra esse recurso
 - dentro dela, chamar a função `register_post_type` que receberá dois parâmetros: o nome entre '' deste custom post e um array
@@ -319,9 +321,13 @@ function alura_registrando_post_customizado(){
 
 `add_action('init', 'alura_registrando_post_customizado');`
 
-## Taxonomia
+### Taxonomia
 
-- conceito de agrupar dados
+- conceito de agrupar dados de acordo com uma característica em comum
+- neste caso, vamos agrupar os posts customizados por países
+
+**Criar a função de taxonomia**
+
 - podemos criar nosso próprio agrupamento dentro dos posts customizados
 - para isso, usar a função `regiter_taxinomy()`
 - recebe 3 parâmetros: 
@@ -343,6 +349,33 @@ function alura_registrando_taxonomia(){
 ```
 
 - em seguida, o action hook: `add_action('init', 'alura_registrando_taxonomia');`
+
+### WP_Query
+
+- mesmo adicionando o `wp loop` na página `page-destinos.php`, os posts customizados do tipo `destinos` ainda não aparecem
+- isso porque o loop não está referenciando o tipo de post `destinos`
+- mas sim o padrão, que seria o conteúdo da página em si
+- por isso, é preciso modificar o loop
+
+1. instaciar um objeto `WP_Query`, guardando seu valor na variável `$query` e recebendo uma variável `$args`
+
+`$query = new WP_Query($args);`
+
+2. passar para a variável `$args` um array que determina o tipo de post que deverá ser buscado / referenciado
+
+`$args = array('post_type' => 'destinos');`
+
+3. vincular o loop com esta query, a chamando em cada uma das 3 etapas
+
+```php
+if ($query->have_posts()):
+    while($query->have_posts()): $query->the_post();
+        the_post_thumbnail();
+        the_title();
+        the_content();
+    endwhile;
+endif;
+```
 
 
 
