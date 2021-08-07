@@ -33,11 +33,6 @@
 - Faça a instalação seguindo os passos e preenchendo seus dados (os mesmos da configuração e também seu usuário, senha e acesso ao painel de administração)
 - Visite `localhost:8888/wordpress/wp-admin` para fazer o login!
 
-## Instalar MAMP e Wordpress no macOS
-
-- [ ] Tema customizado
-- [ ] Plugins
-
 ---
 
 Projeto desenvolvido seguindo os [cursos e materias da Alura](https://www.alura.com.br/) sobre PHP e Wordpress.
