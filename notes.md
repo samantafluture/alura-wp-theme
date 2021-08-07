@@ -319,4 +319,31 @@ function alura_registrando_post_customizado(){
 
 `add_action('init', 'alura_registrando_post_customizado');`
 
+## Taxonomia
+
+- conceito de agrupar dados
+- podemos criar nosso próprio agrupamento dentro dos posts customizados
+- para isso, usar a função `regiter_taxinomy()`
+- recebe 3 parâmetros: 
+    - um string como o nome da taxonomia em questão (neste caso, `paises`)
+    - o tipo de post a qual ela vai se vincular (o custom post criado acima, ou seja, 'destinos)
+    - um array passando o `label` a ser usado (que irá aparecer no painel, neste caso, `Destinos`), e se é hierárquico ('true')
+
+```php
+function alura_registrando_taxonomia(){
+    register_taxonomy(
+        'paises',
+        'destinos',
+        array(
+            'labels' => array('name' => 'Países'),
+            'hierarchical' => true
+        )
+    );
+}
+```
+
+- em seguida, o action hook: `add_action('init', 'alura_registrando_taxonomia');`
+
+
+
 

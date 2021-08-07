@@ -1,5 +1,18 @@
 <?php
 
+function alura_registrando_taxonomia(){
+    register_taxonomy(
+        'paises',
+        'destinos',
+        array(
+            'labels' => array('name' => 'Países'),
+            'hierarchical' => true
+        )
+    );
+}
+
+add_action('init', 'alura_registrando_taxonomia');
+
 function alura_registrando_post_customizado(){
     register_post_type('destinos', 
         array(
