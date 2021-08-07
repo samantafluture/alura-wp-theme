@@ -296,4 +296,27 @@ endif;
 
 ## Posts customizados
 
+- podemos criar uma área no painel para adicionar um tipo de post customizado
+- criar uma função que registra esse recurso
+- dentro dela, chamar a função `register_post_type` que receberá dois parâmetros: o nome entre '' deste custom post e um array
+- este array deverá conter tudo o que terá features: qual o nome, se é público, qual posição irá aparecer, quais recursos irá suportar (ex: título, texto/editor e imagem thumbnail de destaque), e um ícone para o menu
+
+```php
+function alura_registrando_post_customizado(){
+    register_post_type('destinos', 
+        array(
+            'labels' => array('name' => 'Destindos'),
+            'public' => true,
+            'menu_position' => 0,
+            'supports' => array('title', 'editor', 'thumbnail'),
+            'menu_icon' => 'dashicons-admin-site'
+        )
+    );
+}
+```
+
+- em seguida, criar o action hook
+
+`add_action('init', 'alura_registrando_post_customizado');`
+
 
