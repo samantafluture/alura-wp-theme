@@ -35,4 +35,16 @@
 
 ---
 
+## Tutorial completo
+
+1. [Preparar ambiente](https://github.com/samantafluture/alura-wp-theme/blob/main/notes.md#preparar-ambiente)
+2. [Primeiros arquivos](https://github.com/samantafluture/alura-wp-theme/blob/main/notes.md#primeiros-arquivos)
+3. [Fazendo o header](https://github.com/samantafluture/alura-wp-theme/blob/main/notes.md#fazendo-o-header)
+4. [Fazendo as páginas](https://github.com/samantafluture/alura-wp-theme/blob/main/notes.md#fazendo-as-p%C3%A1ginas)
+5. [Fazendo o rodapé](https://github.com/samantafluture/alura-wp-theme/blob/main/notes.md#fazendo-o-rodap%C3%A9)
+6. [Posts customizados](https://github.com/samantafluture/alura-wp-theme/blob/main/notes.md#posts-customizados)
+7. [Criando uma home estática](https://github.com/samantafluture/alura-wp-theme/blob/main/notes.md#posts-customizados)
+
+---
+
 Projeto desenvolvido seguindo os [cursos e materias da Alura](https://www.alura.com.br/) sobre PHP e Wordpress.
