@@ -275,3 +275,23 @@ if(have_posts()):
 endif;
 ```
 
+## Fazendo o rodapé
+
+- usar a função `date()` para imprimir o ano 
+- `<?= date("Y") ?>`
+
+## Hierarquia dos templates
+
+- existe algum arquivo específico para a página x?
+- se sim, exibir template mais específico para esta página x
+- se não, vai exibir template mais genérico para a página x (outros possíveis)
+- até chegar no mais genérico de todos = `index.php`
+
+![hierarquia-template-wordpress](https://developer.wordpress.org/files/2014/10/Screenshot-2019-01-23-00.20.04.png)
+
+- cortar e colar tudo o que está na `index.php` para a página `page-sobre-nos.php`
+- o `sobre-nos` é o `slug da página`
+- assim esta é uma página específica e só será mostrada quando o usuário entrar nela
+- agora temos que construir as outras páginas
+
+
