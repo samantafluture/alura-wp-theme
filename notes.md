@@ -1,0 +1,277 @@
+# Como criar um tema Wordpress do zero
+
+## Preparar ambiente
+
+**MAMP**
+
+- Fazer o download do [Mamp](https://www.mamp.info/en/mac/)
+- Clicar em "start" para colocar o servidor no ar
+- Visite `localhost:8888` para confirmar que subiu
+
+**Banco de dados**
+
+- Criar um banco de dados a ser usado no Wordpress
+- No Mamp, clique na aba `databases`, clique no `+` e nomeie seu banco de dados (exemplo: `wordpress`)
+- Dê um restart no servidor Mamp
+- Vá em `localhost:8888/phpMyAdmin` e veja se seu banco de dados foi criado
+
+**Wordpress**
+
+- Baixe o zip com a última versão do [Wordpress](https://br.wordpress.org/download/)
+- Extraia a pasta `wordpress`
+- Copie e cole a pasta para dentro da pasta `localhost` no `(usuario do mac)/Sites`
+- Dentro desta pasta, abra o arquivo `wp-config-sample.php`
+- Substiua os parâmetros `database_name`, `username` e `password` para o nome do seu banco de dados criado anteriormente (exemplo: `wordpress`)
+- Substitua o restante por `root`
+- Salve e renomeie o arquivo para `wp-config.php`
+- Restart o servidor Mamp
+- Visite `localhost:8888/wordpress`
+- Faça a instalação seguindo os passos e preenchendo seus dados (os mesmos da configuração e também seu usuário, senha e acesso ao painel de administração)
+- Visite `localhost:8888/wordpress/wp-admin` para fazer o login!
+
+## Acessos
+
+- Acessar banco de dados [phpMyAdmin](http://localhost:8888/phpMyAdmin5/)
+- Acessar [painel do Wordpress](http://localhost:8888/wordpress/wp-admin/)
+- Acessar [blog Wordpress](http://localhost:8888/wordpress/)
+
+## Onde os temas ficam armazenados?
+
+Os temas ficam dentro da sua pasta, acessando ``wp-content/themes`. Exemplo de caminho completo: `/wordpress/wp-content/themes.
+
+Este tema está como o diretório `alura-theme`, dentro da pasta 'themes'.
+
+Para o tema aparecer na área de Temas do painel, adicione os seguintes arquivos na pasta:
+- style.css
+- index.php
+- screenshot.jpg (para ser a thumbnail do tema)
+
+Dentro do `style.css`, incluir a descrição do seu tema dentro de comentários:
+
+```css
+/*
+Theme Name: 
+Author: 
+Description: 
+Version: 
+Tags: 
+*/  
+```
+
+## Primeiros arquivos
+
+### header.php 
+
+- inserir as tags html de um documento comum (até o `<body>`)
+- dentro do `<title>`, torná-lo dinâmico para que o usuário possa mudar o título depois
+
+**Título dinâmico**
+
+- inserir a função do WP `bloginfo();` dentro da tag `<title>`
+
+`<title><?php bloginfo( 'name' ); ?></title>`
+
+- antes de fechar o `<header>`, inserir uma tag do WP de cabeçalho, para que ele reconheça
+
+`<?php wp_head(); ?>`
+
+### footer.php
+
+- fechar as tags `</body>` e `</html>`
+- entre elas, antes de fechar o html, inserir uma tag do WP para ele reconhecer que é um footer
+
+`<?php wp_footer(); ?>`
+
+### index.php
+
+- importar aqui os dois arquivos criados
+- usar `require_once`
+
+### functions.php
+
+- toda vez que quisermos adicionar uma funcionalidade que não está no painel, devemos criar uma função dentro do arquivo `functions.php`
+- um exemplo seria adicionar menus
+
+## Fazendo o header
+
+### Menu
+
+- criar uma função com um nome que já diz o que fará e referencia o tema (exemplo: `alura_registrando_menu()`)
+- chamar dentro dela a função wordpress que registra um menu de navegação: `register_nav_menu()`
+
+```php
+function alura_registrando_menu(){
+    register_nav_menu( 
+        'menu-navegacao',
+        'Menu navegação'
+     );
+}
+```
+
+**Action hooks**
+
+- para funcionar, deve-se depois adicionar um `action hook`
+- quando o wp executa seu código interno, nós podemos enganchar novas funções
+- sem o `action hook`, o wp não sabe em que momento o código deverá ser executado
+- por isso, depois de registrar o menu, temos que adicioná-lo
+- neste hook, colocamos quando a função deve ser executada (exemplo: ao iniciar, `init`), e qual esta função (exemplo: a função criada acima `alura_registrando_menu`)
+
+```php
+add_action('init', 'alura_registrando_menu');
+```
+
+- em seguida, já irá aparecer a seção `Menu` dentro de `Aparência` no painel
+- porém mesmo após criar o menu no painel, ele ainda não vai aparecer no site
+- pois ainda precisamos falar onde
+
+**Especificar onde menu deverá ser exibido**
+
+- ir ao header.php onde está o html
+- abaixo da tag `<body>`, inserir uma função php que irá chamar o menu neste local
+- a função será `wp_nav_menu()`
+- essa função espera receber um array
+- temos certas chaves que podemos passar dentro deste array
+- por exemplo: `menu` (o menu que desejamos, aceita id, slug, nome ou objeto); `menu_class` e `menu_id` (para fins de css -> vamos fazer isso depois), entre outros
+- neste caso, vamos usar o `slug` que adicionamos na função (`menu-navegação`) como valor da chave `menu` para ser exibido
+
+```php
+<?php wp_nav_menu(
+    array(
+        'menu' => 'menu-navegacao'
+    )
+); ?>
+```
+
+### Logo
+
+- precisamos acionar a função de adicionar o logo dentro do menu `personalizar`
+- para que o usuário possa mudar o logo assim como ele pode mudar o título
+- deve ser dinâmico
+- precisamos criar uma nova função para dar suporte a isso
+
+**Criar função para adicionar diferentes recursos ao tema**
+
+- iremos criar uma função que pode ter outras funções, cada uma para adicionar novos recursos ao tema
+- uma destas funções será a de `add_theme_support`, que poderá receber como argumento as features/recursos a serem acrescentados
+- neste caso, recebe a feature `custom-logo` como argumento
+
+```php
+function alura_adicionando_recursos_ao_tema(){
+    add_theme_support( 'custom-logo' );
+}
+```
+
+**Action hooks**
+
+- precisa adicionar um action hook para falar quando isso deverá ser executado
+- o hook será o `add_action('after_setup_theme');`
+- ou seja, será executado após o tema ser carregado
+- como segundo argumento, linkar a função a ser chamada
+
+```php
+add_action('after_setup_theme', 'alura_adicionando_recursos_ao_tema');
+```
+
+**Mostrar o logo na tela**
+
+- depois de falar onde deverá ser executado, deveremos no `header.php` adicionar a função no lugar onde isso deverá ser mostrado
+- dentro da tag php, acima do menu navegação, adicionar `the_custom_logo();`
+
+### Estilização
+
+- colocar a referência dos arquivos no header.php em tag html de link:css
+- fazer o link ser dinâmico (o caminho url)
+- abrir tags dentro das aspatas `<?= ?>`
+- colocar a função php que vai imprimir o diretório raiz do meu tema
+- `<?= get_template_directory_uri() ?>`
+- depois concatenar com o diretório /css a ser acessado e o arquivo em questão
+
+```html
+<link rel="stylesheet" href="<?= get_template_directory_uri() . '/css/normalize.css' ?>">
+<link rel="stylesheet" href="<?= get_template_directory_uri() . '/css/bootstrap.css' ?>">
+<link rel="stylesheet" href="<?= get_template_directory_uri() . '/css/header.css' ?>">
+```
+
+- precisamos pedir agora para que o wordpress adicione classes em nossos componentes
+- para que possamos puxar os estilos nos css
+- `<body <?php body_class(); ?>> ` 
+- as classes fixas, adicionamos à mão nas tags html
+
+## Fazendo as páginas
+
+### Suporte à imagem
+
+**Criar função**
+
+- ao fazer uma postagem de página, não há suporte para colocar imagem como destaque
+- precisamos adicionar este recurso em nossa função de recursos
+- adicionar `add_theme_support('post-thumbnails');`
+
+**Adicionar na tela**
+
+- porém ainda não está aparecendo o conteúdo após publicar!
+- isso porque precisamos ir no arquivo `index.php` e falar onde as coisas vão aparecer
+
+### Loop do Wordpress
+
+- tem como objetivo mostrar o conteúdo na página
+- mesmo que seja uma página, é tratado como `post` em nomenclatura 
+
+```php
+if(have_posts()):
+    while(have_posts()): the_post();
+        the_post_thumbnail();
+        the_title();
+        the_content();
+    endwhile;
+endif;
+```
+
+1. se tem conteúdo -> vou pedir pro wp mostra este conteúdo pra mim
+2. enquanto tiver conteúdo -> wp vai mostrar pra mim
+3. o wp vai referencer os conteúdo colocando um "ponteiro" em cada post 
+4. esta referência feita é o `the_post`
+5. dentro, deve-se referenciar em ordem do que deve aparecer na tela: a imagem em destaque, o título e o conteúdo (corpo do texto)
+
+### Estilização
+
+- criar uma variável $estiloPagina e usá-la para carregar o arquivo .css da página em que o usuário estiver
+- dessa forma, fica dinâmico e não carrega todas ao mesmo tempo
+- apenas a que estiver referente à página atual
+
+- assim como no header.php, o index deve ser envolvido com tags html e classes para aplicação do css
+- quando um elemento dinâmico precisa de classes de estilo, estas devem ser passadas como argumento
+
+Exemplos:
+
+`the_post_thumbnail('post-thumbnail', array('class' => 'imagem-sobre-nos'));`
+`the_title('<h2>', '</h2>');`
+
+- se precisa de tags html as está dentro do código/loop php
+- pode inserir estas usando o comando `echo`
+
+Exemplo
+
+`echo '<div class="conteudo container-alura">';`
+`echo '</div>';`
+
+- o loop wp final com estilos ficará assim, para uma das páginas
+
+```php
+if(have_posts()):
+    ?>
+    <main class="main-sobre-nos">
+        <?php
+        while(have_posts()): the_post();
+            the_post_thumbnail('post-thumbnail', array('class' => 'imagem-sobre-nos'));
+            echo '<div class="conteudo container-alura">';
+                the_title('<h2>', '</h2>');
+                the_content();
+            echo '</div>';
+        endwhile;
+        ?>
+    </main>
+<?php
+endif;
+```
+
