@@ -294,4 +294,6 @@ endif;
 - assim esta é uma página específica e só será mostrada quando o usuário entrar nela
 - agora temos que construir as outras páginas
 
+## Posts customizados
+
 
