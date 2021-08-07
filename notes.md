@@ -643,6 +643,7 @@ function pegandoTextosParaBanner(){
 ```
 
 - de volta na `alura_adicionando_scripts()`, acrescentar uma nova função do wp
-- `wp_localize_script('texto-banner-js', 'data', $textosBanner);` vai adicionar o script de js, passar um objeto data para ele e usar a função que criamos acima como forma de mostrar o texto dinâmico
+- usamos a `wp_localize_script('texto-banner-js', 'data', $textosBanner);` para localizar um arquivo javascript e passar variáveis para ele
+- aqui, buscamos os textos cadastrados e o mostramos na home através da variável `data`
 - este objeto `data` também deve ser referenciado no arquivo js
 
